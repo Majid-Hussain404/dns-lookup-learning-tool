@@ -31,9 +31,13 @@ export function createApp() {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps, curl, server-to-server)
+        // Allow requests with no origin (like mobile apps, curl, serverless internal)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+        if (
+          allowedOrigins.includes('*') ||
+          allowedOrigins.includes(origin) ||
+          origin.endsWith('.vercel.app')
+        ) {
           return callback(null, true);
         }
         return callback(new Error(`Origin ${origin} not allowed by CORS policy`));
@@ -54,9 +58,9 @@ export function createApp() {
     next();
   });
 
-  // Mount API routes
-  app.use('/api/health', healthRoutes);
-  app.use('/api/dns', dnsRoutes);
+  // Mount API routes (support both /api/* and direct prefix for Vercel serverless)
+  app.use(['/api/health', '/health'], healthRoutes);
+  app.use(['/api/dns', '/dns'], dnsRoutes);
 
   // 404 Handler
   app.use(notFoundHandler);
