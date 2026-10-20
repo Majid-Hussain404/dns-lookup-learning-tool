@@ -161,7 +161,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
             <div className="text-xs text-slate-500 dark:text-slate-400 mb-1">Records Found</div>
             <div className="text-base font-bold text-slate-900 dark:text-white">
-              {data.records.length}
+              {data.records?.length || 0}
             </div>
           </div>
 
@@ -203,7 +203,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
       </div>
 
       {/* Main Results Table or State Explanations */}
-      {data.records.length > 0 ? (
+      {data.records && data.records.length > 0 ? (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
           <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -231,14 +231,15 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 font-mono text-xs">
                 {data.records.map((rec: DnsRecordItem, idx: number) => {
-                  const isCopied = copiedValue === rec.value;
+                  const valString = typeof rec.value === 'object' ? JSON.stringify(rec.value) : String(rec.value ?? '');
+                  const isCopied = copiedValue === valString;
                   return (
                     <tr
-                      key={`${rec.name}-${rec.type}-${rec.value}-${idx}`}
+                      key={`${rec.name}-${rec.type}-${valString}-${idx}`}
                       className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors"
                     >
                       <td className="px-6 py-3 text-slate-700 dark:text-slate-300 font-medium">
-                        {rec.name}
+                        {String(rec.name ?? '')}
                       </td>
                       <td className="px-4 py-3">
                         <span className="px-2 py-0.5 rounded font-bold text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
@@ -246,7 +247,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
                         </span>
                       </td>
                       <td className="px-6 py-3 text-slate-900 dark:text-slate-100 max-w-md break-all">
-                        {rec.value}
+                        {valString}
                       </td>
                       <td className="px-4 py-3 text-slate-500 dark:text-slate-400">
                         {rec.ttl !== undefined ? `${rec.ttl}s` : <span className="text-slate-400 italic">N/A</span>}

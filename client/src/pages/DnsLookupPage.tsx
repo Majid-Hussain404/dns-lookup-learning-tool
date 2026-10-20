@@ -28,8 +28,17 @@ export const DnsLookupPage: React.FC<DnsLookupPageProps> = ({
   const [generalError, setGeneralError] = useState<string | null>(null);
   const [recentQueries, setRecentQueries] = useState<{ domain: string; type: SupportedRecordType }[]>(
     () => {
-      const saved = localStorage.getItem('dns_recent_queries');
-      return saved ? JSON.parse(saved) : [];
+      try {
+        const saved = localStorage.getItem('dns_recent_queries');
+        if (!saved) return [];
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter((item) => item && typeof item.domain === 'string' && typeof item.type === 'string');
+        }
+        return [];
+      } catch {
+        return [];
+      }
     }
   );
 
@@ -162,7 +171,7 @@ export const DnsLookupPage: React.FC<DnsLookupPageProps> = ({
             <div className="sticky top-24">
               <LearningPanel
                 recordType={result.recordType}
-                recordCount={result.records.length}
+                recordCount={result.records?.length || 0}
                 onOpenGuide={handleOpenGuide}
               />
             </div>

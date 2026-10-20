@@ -83,7 +83,7 @@ export const LearningPanel: React.FC<LearningPanelProps> = ({
               Common Misconception:
             </span>
             <p className="text-[11px] leading-relaxed">
-              {guideItem.commonTroubleshootingIssues[0]}
+              {guideItem.commonTroubleshootingIssues?.[0] || 'Ensure DNS records are configured according to RFC specifications.'}
             </p>
           </div>
 
