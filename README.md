@@ -228,7 +228,7 @@ git --version
 
 ### Step 1: Clone or Navigate to the Project
 ```powershell
-git clone https://github.com/<your-username>/dns-lookup-learning-tool.git
+git clone https://github.com/Majid-Hussain404/dns-lookup-learning-tool.git
 cd dns-lookup-learning-tool
 ```
 
@@ -336,28 +336,18 @@ npm run test --workspace=client
 
 ## 11. Deployment Guide
 
-### Deploying Frontend to Vercel
-1. Push your repository to GitHub.
-2. Log into [Vercel](https://vercel.com/) and click **Add New Project**.
-3. Select your repository.
-4. Set the **Root Directory** to `client`.
-5. Set Build Command: `npm run build` and Output Directory: `dist`.
-6. Add an Environment Variable:
-   - `VITE_API_BASE_URL`: URL of your deployed backend (e.g., `https://dns-explorer-api.onrender.com/api`).
-7. Click **Deploy**.
+### Option A: All-in-One Vercel Deployment (Recommended)
+This repository is pre-configured with a root [`vercel.json`](vercel.json) that automatically builds both the **Vite React frontend** and the **Express Node.js backend** as a unified project under a single Vercel domain:
 
-### Deploying Backend to Render
-1. Log into [Render](https://render.com/) and select **New Web Service**.
-2. Connect your GitHub repository.
-3. Set the **Root Directory** to `server`.
-4. Set Environment to `Node`.
-5. Build Command: `npm install && npm run build`
-6. Start Command: `npm start`
-7. Add Environment Variables:
-   - `PORT`: `5001`
-   - `NODE_ENV`: `production`
-   - `CORS_ORIGIN`: Your deployed Vercel frontend domain (e.g., `https://dns-explorer.vercel.app`)
-8. Click **Create Web Service**.
+1. Push your code to GitHub.
+2. Open your [Vercel Dashboard](https://vercel.com/new).
+3. Click **Import** next to `dns-lookup-learning-tool`.
+4. Leave all default settings as they are (Vercel automatically detects the multi-service layout from `vercel.json`).
+5. Click **Deploy**!
+
+### Option B: Separate Hosting (Frontend on Vercel, Backend on Render)
+1. **Frontend (Vercel):** Set Root Directory to `client`, Build Command: `npm run build`, Output Directory: `dist`, and set `VITE_API_BASE_URL` to your backend URL.
+2. **Backend (Render):** Set Root Directory to `server`, Environment: `Node`, Build Command: `npm install && npm run build`, Start Command: `npm start`, and set `CORS_ORIGIN` to your frontend URL.
 
 ---
 
