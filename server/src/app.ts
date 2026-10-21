@@ -8,6 +8,9 @@ import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 export function createApp() {
   const app = express();
 
+  // Trust reverse proxy (Vercel, Cloudflare) for rate limiting & IP detection
+  app.set('trust proxy', 1);
+
   // Security Headers via Helmet
   app.use(
     helmet({
@@ -70,3 +73,5 @@ export function createApp() {
 
   return app;
 }
+
+export default createApp();

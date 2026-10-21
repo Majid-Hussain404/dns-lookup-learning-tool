@@ -10,6 +10,9 @@ export const dnsRateLimiter = rateLimit({
   max: 60, // Limit each IP to 60 requests per windowMs
   standardHeaders: true, // Return standard RateLimit headers in the `RateLimit-*` format
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  validate: {
+    xForwardedForHeader: false,
+  },
   message: {
     status: 'ERROR',
     message: 'Too many DNS lookup requests from this IP address. Please slow down and wait a minute before trying again.',

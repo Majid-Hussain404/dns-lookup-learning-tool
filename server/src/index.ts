@@ -30,3 +30,6 @@ process.on('SIGINT', () => {
     console.log('HTTP server closed');
   });
 });
+
+export default app;
+
