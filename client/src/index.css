@@ -67,7 +67,3 @@
 .animate-signal {
   animation: signalPulse 2s infinite ease-in-out;
 }
-
-.transform-3d {
-  transform-style: preserve-3d;
-}

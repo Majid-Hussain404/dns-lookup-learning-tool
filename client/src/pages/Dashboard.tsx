@@ -14,7 +14,6 @@ import {
 import { ActiveTab } from '../components/Navbar';
 import { DomainLookupForm } from '../components/DomainLookupForm';
 import { SupportedRecordType } from '../types/dns';
-import { ThreeDMarqueeDemo } from '../components/ThreeDMarqueeDemo';
 
 interface DashboardProps {
   setActiveTab: (tab: ActiveTab) => void;
@@ -223,26 +222,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Interactive 3D Showcase Section */}
-      <section className="space-y-4 pt-4">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20 mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Modern 3D Interface</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
-              Interactive 3D Visual Experience
-            </h2>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
-            Hardware-accelerated perspective marquee bringing dynamic motion to networking education.
-          </p>
-        </div>
-
-        <ThreeDMarqueeDemo />
       </section>
     </div>
   );
