@@ -32,7 +32,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // node_modules/depd/index.js
 var require_depd = __commonJS({
@@ -24423,13 +24422,6 @@ var require_lib3 = __commonJS({
   }
 });
 
-// server/src/vercel.ts
-var vercel_exports = {};
-__export(vercel_exports, {
-  default: () => vercel_default
-});
-module.exports = __toCommonJS(vercel_exports);
-
 // server/src/app.ts
 var import_express3 = __toESM(require_express2());
 
@@ -30381,12 +30373,7 @@ var app_default = createApp();
 
 // server/src/vercel.ts
 var app = createApp();
-var handler = (req, res) => {
-  return app(req, res);
-};
-var vercel_default = handler;
-module.exports = handler;
-module.exports.default = handler;
+module.exports = app;
 /*! Bundled license information:
 
 depd/index.js:
@@ -30699,3 +30686,4 @@ object-assign/index.js:
   @license MIT
   *)
 */
+module.exports.default = module.exports;
