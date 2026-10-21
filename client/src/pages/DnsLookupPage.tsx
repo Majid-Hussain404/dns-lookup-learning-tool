@@ -63,7 +63,15 @@ export const DnsLookupPage: React.FC<DnsLookupPageProps> = ({
       });
     } catch (err: unknown) {
       if (err instanceof ApiError && err.response) {
-        setResult(err.response);
+        if (err.response.error?.code === 'NETWORK_ERROR') {
+          const errorMsg =
+            err.message ||
+            'Unable to connect to the backend DNS service. Please verify that the backend process is running on port 5001.';
+          setGeneralError(errorMsg);
+          setResult(null);
+        } else {
+          setResult(err.response);
+        }
       } else {
         const errorMsg =
           err instanceof Error
@@ -172,6 +180,7 @@ export const DnsLookupPage: React.FC<DnsLookupPageProps> = ({
               <LearningPanel
                 recordType={result.recordType}
                 recordCount={result.records?.length || 0}
+                status={result.status}
                 onOpenGuide={handleOpenGuide}
               />
             </div>

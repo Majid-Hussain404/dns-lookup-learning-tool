@@ -6,12 +6,14 @@ import { RECORDS_GUIDE_DATA } from '../data/recordsGuideData';
 interface LearningPanelProps {
   recordType: SupportedRecordType;
   recordCount: number;
+  status?: string;
   onOpenGuide: (type: SupportedRecordType) => void;
 }
 
 export const LearningPanel: React.FC<LearningPanelProps> = ({
   recordType,
   recordCount,
+  status = 'SUCCESS',
   onOpenGuide,
 }) => {
   const guideItem = RECORDS_GUIDE_DATA.find((r) => r.type === recordType);
@@ -59,6 +61,8 @@ export const LearningPanel: React.FC<LearningPanelProps> = ({
             <p className="leading-relaxed">
               {recordCount > 0
                 ? `Discovered ${recordCount} record(s). ${guideItem.whatReturnedValueMeans}`
+                : status === 'ERROR' || status === 'TIMEOUT' || status === 'SERVFAIL' || status === 'REFUSED'
+                ? `The lookup ended with status ${status}. See the diagnostic interpretation box for resolution steps.`
                 : `Zero ${recordType} records returned. This domain does not publish this specific record type. Remember that domains are only required to publish records for services they offer.`}
             </p>
           </div>

@@ -189,17 +189,23 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
         </div>
 
         {/* Educational Notices on Duration & Local Resolver */}
-        <div className="mt-4 p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/60 text-xs text-sky-800 dark:text-sky-300 flex items-start gap-2">
-          <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <p>
-              <strong>Measurement Note:</strong> {data.durationNotice}
-            </p>
-            <p className="text-[11px] text-sky-700/80 dark:text-sky-300/80">
-              {data.resolverNotice}
-            </p>
+        {(data.durationNotice || data.resolverNotice) && (
+          <div className="mt-4 p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/60 text-xs text-sky-800 dark:text-sky-300 flex items-start gap-2">
+            <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              {data.durationNotice && (
+                <p>
+                  <strong>Measurement Note:</strong> {data.durationNotice}
+                </p>
+              )}
+              {data.resolverNotice && (
+                <p className="text-[11px] text-sky-700/80 dark:text-sky-300/80">
+                  {data.resolverNotice}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Main Results Table or State Explanations */}
@@ -297,11 +303,19 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
                   ? `No ${data.recordType} Records Found (NODATA)`
                   : data.status === 'TIMEOUT'
                   ? 'DNS Query Timed Out'
+                  : data.status === 'SERVFAIL'
+                  ? 'Nameserver Failure (SERVFAIL)'
+                  : data.status === 'REFUSED'
+                  ? 'Query Refused by Server (REFUSED)'
+                  : data.status === 'ERROR'
+                  ? 'DNS Resolution Error'
                   : 'Resolution Notice'}
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
-                {data.message}
-              </p>
+              {data.message && (
+                <p className="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                  {data.message}
+                </p>
+              )}
             </div>
 
             {/* Diagnostic advice box */}
@@ -328,6 +342,26 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({ data, onRunAnother }
                 <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
                   <li>The configured DNS resolver or upstream nameserver took longer than {data.durationMs}ms to respond.</li>
                   <li>Verify internet connectivity and confirm UDP port 53 is not blocked by local firewalls.</li>
+                </ul>
+              )}
+              {data.status === 'SERVFAIL' && (
+                <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
+                  <li>The authoritative or recursive nameserver encountered an internal failure while processing this query.</li>
+                  <li>Common causes include DNSSEC signature validation failure, lame delegation, or zone transfer restrictions.</li>
+                  <li>Try querying alternative recursive resolvers (e.g., 1.1.1.1, 8.8.8.8) to see if validation fails globally.</li>
+                </ul>
+              )}
+              {data.status === 'REFUSED' && (
+                <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
+                  <li>The DNS server explicitly refused to answer this query due to policy, rate limiting, or zone security restrictions.</li>
+                  <li>Recursive queries may be disabled on this nameserver for public internet clients.</li>
+                </ul>
+              )}
+              {data.status === 'ERROR' && (
+                <ul className="list-disc list-inside text-slate-600 dark:text-slate-400 space-y-1">
+                  <li>An error occurred while dispatching the DNS query through the local host socket resolver.</li>
+                  <li>Verify that your network connection is active and host DNS settings are reachable.</li>
+                  <li>Ensure the backend service is running and healthy on port 5001.</li>
                 </ul>
               )}
             </div>

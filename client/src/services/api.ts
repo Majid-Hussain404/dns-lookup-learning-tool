@@ -51,7 +51,7 @@ export async function fetchDnsLookup(
 
     // Network connectivity issue or server unreachable
     throw new ApiError(
-      'Unable to connect to the DNS backend service. Ensure the backend server is running on port 5000.',
+      'Unable to connect to the DNS backend service. Ensure the backend server is running on port 5001 (run "npm run dev" or "npm run dev:server").',
       {
         domain,
         recordType: type,
