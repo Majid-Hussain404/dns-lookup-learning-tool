@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
     "dev:server": "npm run dev --workspace=server",
     "dev:client": "npm run dev --workspace=client",
-    "build": "npm run build --workspace=server && npm run build --workspace=client && npx esbuild server/src/vercel.ts --bundle --platform=node --target=node20 --format=cjs --external:express --external:cors --external:helmet --external:zod --external:express-rate-limit --outfile=api/index.js",
+    "build": "npm run build --workspace=server && npm run build --workspace=client && npx esbuild server/src/vercel.ts --bundle --platform=node --target=node20 --format=cjs --outfile=api/index.js",
     "test": "npm run test --workspace=server && npm run test --workspace=client",
     "lint": "npm run lint --workspace=server && npm run lint --workspace=client"
   },

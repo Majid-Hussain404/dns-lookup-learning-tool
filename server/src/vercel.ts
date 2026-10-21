@@ -2,5 +2,10 @@ import { createApp } from './app';
 
 const app = createApp();
 
-module.exports = app;
-module.exports.default = app;
+const handler = (req: any, res: any) => {
+  return app(req, res);
+};
+
+export default handler;
+module.exports = handler;
+module.exports.default = handler;
