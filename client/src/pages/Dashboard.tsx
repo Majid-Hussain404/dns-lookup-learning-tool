@@ -9,11 +9,11 @@ import {
   ShieldCheck,
   Zap,
   Layers,
-  Sparkles,
 } from 'lucide-react';
 import { ActiveTab } from '../components/Navbar';
 import { DomainLookupForm } from '../components/DomainLookupForm';
 import { SupportedRecordType } from '../types/dns';
+import { GoogleGeminiEffectDemo } from '../components/GoogleGeminiEffectDemo';
 
 interface DashboardProps {
   setActiveTab: (tab: ActiveTab) => void;
@@ -74,43 +74,9 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   return (
     <div className="space-y-12 pb-12">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-sky-900 via-slate-900 to-slate-950 text-white p-8 sm:p-12 border border-slate-800 shadow-2xl">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.15),transparent_50%)]"></div>
-        <div className="relative max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-400/30">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Interactive Networking Education</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-            Demystifying the{' '}
-            <span className="bg-gradient-to-r from-sky-400 to-cyan-300 bg-clip-text text-transparent">
-              Domain Name System
-            </span>
-          </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-            The internet speaks in numbers, but humans speak in names. DNS is the global distributed directory that translates human-friendly domains into machine-routable IP addresses.
-          </p>
-
-          <div className="flex flex-wrap gap-4 pt-2">
-            <button
-              onClick={() => setActiveTab('lookup')}
-              className="px-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold text-sm flex items-center gap-2 shadow-lg shadow-sky-500/30 transition-all hover:scale-105 cursor-pointer"
-            >
-              <Search className="w-4 h-4" />
-              <span>Launch Live Lookup</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('visualizer')}
-              className="px-6 py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-white font-semibold text-sm flex items-center gap-2 border border-slate-700 transition-all hover:scale-105 cursor-pointer"
-            >
-              <GitBranch className="w-4 h-4 text-sky-400" />
-              <span>Watch Resolution Flow</span>
-            </button>
-          </div>
-        </div>
+      {/* Google Gemini Scroll Effect Hero */}
+      <section className="relative">
+        <GoogleGeminiEffectDemo onExploreClick={() => setActiveTab('lookup')} />
       </section>
 
       {/* Quick Lookup Form Widget */}
